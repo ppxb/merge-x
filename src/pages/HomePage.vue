@@ -168,7 +168,7 @@ onMounted(async () => {
   padding: 2px 10px;
   background-color: #c8e608;
   color: #222;
-  font-size: 0.875rem;
+  font-size: 12px;
   font-weight: 700;
   border-radius: 14px 6px;
   margin-right: 12px;
@@ -181,7 +181,7 @@ onMounted(async () => {
   padding: 2px 10px;
   background-color: #4e5d02;
   color: #fff;
-  font-size: 0.875rem;
+  font-size: 12px;
   border-radius: 12px 6px;
 }
 
