@@ -25,3 +25,9 @@ export const queryAnime = keyword => {
 export const queryAnimeDetail = id => {
   return get(`/tv/${id}?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}`)
 }
+
+export const queryAnimeSeasonDetail = (id, season) => {
+  return get(
+    `/tv/${id}/season/${season}?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}`
+  )
+}

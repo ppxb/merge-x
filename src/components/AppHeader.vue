@@ -19,7 +19,7 @@
   align-items: center;
   padding: 2rem 6rem;
   background: transparent;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .app-header-logo {
@@ -27,14 +27,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: 1.875rem;
   font-weight: 700;
   color: #fff;
-  line-height: 2rem;
+  line-height: 1.5rem;
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 1.225rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.9);
 }

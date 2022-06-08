@@ -7,6 +7,7 @@
       direction="horizontal"
       dot-type="line"
       dot-placement="right"
+      style="z-index: 999"
     >
       <div
         class="home-carousel-item"
@@ -16,8 +17,16 @@
           backgroundImage: `url(${compactImageUrl(anime.backdrop_path)})`
         }"
       >
+        <div class="home-carousel-item-status">
+          <div class="home-carousel-item-status-rate">
+            <span class="hint-tag">TMDB</span> {{ anime.vote_average }}
+          </div>
+          <div class="home-carousel-item-status-text">
+            {{ anime.status }}
+          </div>
+        </div>
         <div class="home-carousel-item-title">
-          <n-ellipsis style="max-width: 800px">
+          <n-ellipsis style="max-width: 720px" :tooltip="false">
             {{ anime.name }}
           </n-ellipsis>
         </div>
@@ -25,11 +34,24 @@
           <div class="season-year">
             {{ anime.first_air_date.split('-')[0] }}
           </div>
-          <div>{{ anime.episode_run_time[0] }} minut</div>
+          <div class="divider"></div>
+          <div>{{ anime.episode_run_time[0] }} Minut</div>
+          <div class="divider"></div>
           <div>
-            {{ anime.seasons[anime.seasons.length - 1].episode_count }} Episode
+            {{
+              anime.seasons[anime.seasons.length - 1].episode_count === 0
+                ? anime.seasons[anime.seasons.length - 2].episode_count
+                : anime.seasons[anime.seasons.length - 1].episode_count
+            }}
+            Episode
           </div>
-          <div>{{ anime.spoken_languages[0].name }}</div>
+          <div class="divider"></div>
+          <div>{{ anime.spoken_languages[0].english_name }}</div>
+        </div>
+        <div class="home-carousel-item-overview">
+          <n-ellipsis style="max-width: 560px" line-clamp="3" :tooltip="false">
+            {{ anime.overview }}
+          </n-ellipsis>
         </div>
       </div>
       <template #dots="{ total, currentIndex, to }">
@@ -48,7 +70,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { queryAnime, queryAnimeDetail } from '../api/rest'
+import {
+  queryAnime,
+  queryAnimeDetail,
+  queryAnimeSeasonDetail
+} from '../api/rest'
 import {
   getCorrectAnimeObject,
   formatAnimeName,
@@ -65,12 +91,34 @@ onMounted(async () => {
   const originAnimeNameList = result.Page.media.map(item =>
     formatAnimeName(item.title.userPreferred)
   )
-  const queryAnimeList = originAnimeNameList.map(item => queryAnime(item))
-  const queryData = await Promise.all(queryAnimeList)
-  const tempQueryData = getCorrectAnimeObject(queryData)
-  carouselList.value = await Promise.all(
-    tempQueryData.map(item => queryAnimeDetail(item.id))
+  const animeData = await Promise.all(
+    originAnimeNameList.map(item => queryAnime(item))
   )
+  const temp = getCorrectAnimeObject(animeData)
+  const animeDetailData = await Promise.all(
+    temp.map(item => queryAnimeDetail(item.id))
+  )
+  const animeSeasonData = await Promise.all(
+    animeDetailData.map(item => {
+      const currentSeason = item.seasons
+        .filter(season => season.episode_count > 0 && season.season_number > 0)
+        .pop()
+      return queryAnimeSeasonDetail(item.id, currentSeason.season_number)
+    })
+  )
+
+  animeSeasonData.map(item => {
+    for (let i = 0; i < animeDetailData.length; i++) {
+      if (animeDetailData[i].seasons.some(season => season.id === item.id)) {
+        animeDetailData[i] = Object.assign(animeDetailData[i], {
+          season_detail: item
+        })
+        continue
+      }
+    }
+  })
+
+  carouselList.value = animeDetailData
   console.log(carouselList.value)
 })
 </script>
@@ -79,6 +127,7 @@ onMounted(async () => {
 .home {
   height: 100vh;
 }
+
 .home-carousel-item {
   width: 100%;
   height: 100vh;
@@ -89,6 +138,7 @@ onMounted(async () => {
   flex-direction: column;
   justify-content: center;
   padding: 0 6rem;
+  z-index: 999;
 }
 
 .home-carousel-item::after {
@@ -98,7 +148,7 @@ onMounted(async () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
+  background-image: linear-gradient(
     0deg,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.15) 25%,
@@ -107,32 +157,63 @@ onMounted(async () => {
   );
 }
 
+.home-carousel-item-status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  z-index: 999;
+}
+
+.home-carousel-item-status-rate {
+  padding: 2px 10px;
+  background-color: #c8e608;
+  color: #222;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border-radius: 14px 6px;
+  margin-right: 12px;
+}
+
+.hint-tag {
+  margin-right: 8px;
+}
+.home-carousel-item-status-text {
+  padding: 2px 10px;
+  background-color: #4e5d02;
+  color: #fff;
+  font-size: 0.875rem;
+  border-radius: 12px 6px;
+}
+
 .home-carousel-item-title {
   color: #fff;
-  font-size: 3.5rem;
+  font-size: 3rem;
   font-weight: 700;
   z-index: 999;
 }
 
 .home-carousel-item-season {
   display: flex;
-  font-size: 1.125rem;
-  color: #fff;
+  font-size: 1rem;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
   z-index: 999;
+  margin-bottom: 1.5rem;
 }
 
-.home-carousel-item-season div {
-  margin-right: 1.5rem;
-  padding-right: 1rem;
-  border-right: 2px solid rgba(255, 255, 255, 0.7);
+.divider {
+  width: 2px;
+  height: 1rem;
+  margin: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.45);
 }
 
-.home-carousel-item-season div:last-child {
-  padding-right: 0;
-  border-right: none;
-}
-
-.season-year {
+.home-carousel-item-overview {
+  font-size: 1rem;
+  line-height: 1.875rem;
+  color: rgba(255, 255, 255, 0.95);
+  z-index: 999;
 }
 
 .custom-dots {
