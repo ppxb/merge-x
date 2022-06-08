@@ -11,7 +11,7 @@
     >
       <div
         class="home-carousel-item"
-        v-for="anime in carouselList"
+        v-for="(anime, index) in carouselList"
         :key="anime.id"
         :style="{
           backgroundImage: `url(${compactImageUrl(anime.backdrop_path)})`
@@ -24,6 +24,9 @@
           <div class="home-carousel-item-status-text">
             {{ anime.status }}
           </div>
+          <div class="home-carousel-item-status-trending">
+            Trending #{{ index + 1 }}
+          </div>
         </div>
         <div class="home-carousel-item-title">
           <n-ellipsis style="max-width: 720px" :tooltip="false">
@@ -35,7 +38,7 @@
             {{ anime.first_air_date.split('-')[0] }}
           </div>
           <div class="divider"></div>
-          <div>{{ anime.episode_run_time[0] }} Minut</div>
+          <div>{{ anime.episode_run_time[0] }} Mins</div>
           <div class="divider"></div>
           <div>
             {{
@@ -160,7 +163,7 @@ onMounted(async () => {
 .home-carousel-item-status {
   display: flex;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 12px;
   z-index: 999;
 }
 
@@ -170,19 +173,30 @@ onMounted(async () => {
   color: #222;
   font-size: 12px;
   font-weight: 700;
-  border-radius: 14px 6px;
-  margin-right: 12px;
+  border-radius: 12px 4px;
+  margin-right: 1rem;
 }
 
 .hint-tag {
-  margin-right: 8px;
+  margin-right: 6px;
 }
 .home-carousel-item-status-text {
   padding: 2px 10px;
   background-color: #4e5d02;
   color: #fff;
   font-size: 12px;
-  border-radius: 12px 6px;
+  font-weight: 600;
+  border-radius: 12px 4px;
+  margin-right: 1rem;
+}
+
+.home-carousel-item-status-trending {
+  padding: 2px 10px;
+  background-color: #d7be6e;
+  color: #222;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px 4px;
 }
 
 .home-carousel-item-title {
@@ -199,19 +213,19 @@ onMounted(async () => {
   color: rgba(255, 255, 255, 0.85);
   font-weight: 500;
   z-index: 999;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .divider {
   width: 2px;
   height: 1rem;
   margin: 0 1rem;
-  background-color: rgba(255, 255, 255, 0.45);
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
 .home-carousel-item-overview {
-  font-size: 1rem;
-  line-height: 1.875rem;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   z-index: 999;
 }
