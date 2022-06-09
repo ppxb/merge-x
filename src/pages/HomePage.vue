@@ -138,9 +138,10 @@ onMounted(async () => {
   animeSeasonData.map(item => {
     for (let i = 0; i < animeDetailData.length; i++) {
       if (animeDetailData[i].seasons.some(season => season.id === item.id)) {
-        animeDetailData[i] = Object.assign(animeDetailData[i], {
-          season_detail: item
-        })
+        animeDetailData[i] = {
+          ...animeDetailData[i],
+          ...{ season_detail: item }
+        }
         continue
       }
     }
