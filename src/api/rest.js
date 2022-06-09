@@ -21,7 +21,6 @@ export const queryAnime = keyword => {
   )
 }
 
-// https://api.themoviedb.org/3/tv/83095?api_key=bc82e6dfd48db14ca6a9139201fc58c2&language=ja-JP
 export const queryAnimeDetail = id => {
   return get(`/tv/${id}?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}`)
 }

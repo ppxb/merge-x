@@ -11,7 +11,7 @@
     >
       <div
         class="home-carousel-item"
-        v-for="(anime, index) in carouselList"
+        v-for="anime in carouselList"
         :key="anime.id"
         :style="{
           backgroundImage: `url(${compactImageUrl(anime.backdrop_path)})`
@@ -24,8 +24,8 @@
           <div class="home-carousel-item-status-text">
             {{ anime.status }}
           </div>
-          <div class="home-carousel-item-status-trending">
-            Trending #{{ index + 1 }}
+          <div class="home-carousel-item-status-season">
+            Season {{ anime.season_detail.season_number }}
           </div>
         </div>
         <div class="home-carousel-item-title">
@@ -56,6 +56,26 @@
             {{ anime.overview }}
           </n-ellipsis>
         </div>
+        <div class="home-carousel-item-episode">
+          <div
+            v-for="episode in anime.season_detail.episodes.slice(0, 3)"
+            class="episode-item"
+            :style="{
+              backgroundImage: `url(${compactLowImageUrl(episode.still_path)})`
+            }"
+          >
+            <div class="episode-item-detail">
+              <n-ellipsis style="max-width: 220px" :tooltip="false">
+                EP.{{ episode.episode_number }} # {{ episode.name }}
+              </n-ellipsis>
+              <div class="episode-item-detail-text">
+                <div class="title">{{ episode.air_date }}</div>
+                <div class="divider-sm"></div>
+                <div class="title">{{ episode.runtime }} Mins</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <template #dots="{ total, currentIndex, to }">
         <ul class="custom-dots">
@@ -81,7 +101,8 @@ import {
 import {
   getCorrectAnimeObject,
   formatAnimeName,
-  compactImageUrl
+  compactImageUrl,
+  compactLowImageUrl
 } from '../utils'
 import { useHomeDataQuery } from '../api/graphql'
 
@@ -154,7 +175,7 @@ onMounted(async () => {
   background-image: linear-gradient(
     0deg,
     rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.15) 25%,
+    rgba(0, 0, 0, 0.3) 45%,
     rgba(0, 0, 0, 0.15) 55%,
     rgba(0, 0, 0, 1) 100%
   );
@@ -190,7 +211,7 @@ onMounted(async () => {
   margin-right: 1rem;
 }
 
-.home-carousel-item-status-trending {
+.home-carousel-item-status-season {
   padding: 2px 10px;
   background-color: #d7be6e;
   color: #222;
@@ -210,7 +231,7 @@ onMounted(async () => {
   display: flex;
   font-size: 1rem;
   align-items: center;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
   z-index: 999;
   margin-bottom: 1.25rem;
@@ -228,6 +249,53 @@ onMounted(async () => {
   line-height: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   z-index: 999;
+}
+
+.home-carousel-item-episode {
+  display: flex;
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 999;
+}
+
+.episode-item {
+  width: 250px;
+  height: 130px;
+  margin-left: 1.875rem;
+  border-radius: 12px;
+  display: flex;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.episode-item-detail {
+  width: 100%;
+  padding: 6px 12px;
+  backdrop-filter: blur(20px);
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.episode-item-detail-text {
+  display: flex;
+  align-items: center;
+}
+
+.episode-item-detail-text .title {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.divider-sm {
+  width: 2px;
+  height: 12px;
+  margin: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
 .custom-dots {

@@ -14,3 +14,6 @@ export const getCorrectAnimeObject = list =>
 
 export const compactImageUrl = imgUrl =>
   `https://image.tmdb.org/t/p/w1280${imgUrl}`
+
+export const compactLowImageUrl = imgUrl =>
+  `https://image.tmdb.org/t/p/w227_and_h127_bestv2/${imgUrl}`
