@@ -6,7 +6,7 @@
     </div>
     <div class="app-header-nav">
       <router-link to="/" exact>HOME</router-link>
-      <!-- <router-link to="/discover">DISCOVER</router-link> -->
+      <router-link to="/discover">DISCOVER</router-link>
     </div>
   </div>
 </template>
