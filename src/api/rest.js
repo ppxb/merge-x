@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const TMDB_API_KEY = 'bc82e6dfd48db14ca6a9139201fc58c2'
-const TMDB_API_LANGUAGE = 'ja-JP'
+// const TMDB_API_LANGUAGE = 'ja-JP'
+const TMDB_API_LANGUAGE = 'zh-CN'
 
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = 'https://api.themoviedb.org/3'

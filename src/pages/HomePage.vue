@@ -54,10 +54,10 @@
         </div>
         <div class="home-carousel-item-overview">
           <n-ellipsis style="max-width: 560px" line-clamp="3" :tooltip="false">
-            {{ anime.overview }}
+            {{ anime.overview.trim() }}
           </n-ellipsis>
         </div>
-        <div class="home-carousel-item-more">Learn More</div>
+        <div class="home-carousel-item-more">了解更多</div>
         <div class="home-carousel-item-episode">
           <div
             v-for="episode in anime.season_detail.episodes.slice(0, 3)"
@@ -67,7 +67,7 @@
             }"
           >
             <div class="episode-item-detail">
-              <n-ellipsis style="max-width: 220px" :tooltip="false">
+              <n-ellipsis style="max-width: 200px" :tooltip="false">
                 EP.{{ episode.episode_number }} # {{ episode.name }}
               </n-ellipsis>
               <div class="episode-item-detail-text">
@@ -147,6 +147,7 @@ onMounted(async () => {
   })
 
   carouselList.value = animeDetailData
+  console.log(carouselList.value)
 })
 </script>
 
@@ -258,11 +259,10 @@ onMounted(async () => {
 .home-carousel-item-more {
   border: none;
   width: fit-content;
-  padding: 10px 28px;
+  padding: 8px 24px;
   z-index: 999;
   font-size: 0.875rem;
   border-radius: 8px;
-  font-weight: 600;
   color: rgba(255, 255, 255, 0.7);
   background-color: rgba(255, 255, 255, 0.25);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -284,8 +284,8 @@ onMounted(async () => {
 }
 
 .episode-item {
-  width: 250px;
-  height: 130px;
+  width: 220px;
+  height: 120px;
   margin-left: 1.5rem;
   border-radius: 12px;
   display: flex;
@@ -318,13 +318,14 @@ onMounted(async () => {
 }
 
 .episode-item-detail-text .title {
+  margin-top: 2px;
   color: rgba(255, 255, 255, 0.5);
 }
 
 .divider-sm {
   width: 2px;
   height: 12px;
-  margin: 0 1rem;
+  margin: 0 0.875rem;
   background-color: rgba(255, 255, 255, 0.35);
 }
 
