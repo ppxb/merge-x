@@ -16,7 +16,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const currentRoute = router.currentRoute.value.path
-console.log(currentRoute)
 </script>
 
 <style scoped>

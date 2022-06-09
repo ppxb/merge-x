@@ -147,7 +147,7 @@ onMounted(async () => {
   })
 
   carouselList.value = animeDetailData
-  console.log(carouselList.value)
+  // console.log(carouselList.value)
 })
 </script>
 

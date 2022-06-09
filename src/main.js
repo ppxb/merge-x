@@ -17,4 +17,8 @@ app.use(client)
 app.use(pinia)
 app.use(router)
 
+window.addEventListener('keydown', event => {
+  if (event.ctrlKey && event.key === '/') console.log(123)
+})
+
 app.mount('#app')
