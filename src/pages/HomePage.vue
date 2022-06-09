@@ -67,7 +67,7 @@
             }"
           >
             <div class="episode-item-detail">
-              <n-ellipsis style="max-width: 200px" :tooltip="false">
+              <n-ellipsis style="max-width: 180px" :tooltip="false">
                 EP.{{ episode.episode_number }} # {{ episode.name }}
               </n-ellipsis>
               <div class="episode-item-detail-text">
