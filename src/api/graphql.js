@@ -7,19 +7,21 @@ const HomeDataQuery = gql`
     $type: MediaType
     $season: MediaSeason
     $seasonYear: Int
+    $format: [MediaFormat]
     $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]
   ) {
-    Page(page: 1, perPage: 5) {
+    Page(page: 1, perPage: 20) {
       media(
         id: $id
         type: $type
         season: $season
         seasonYear: $seasonYear
         sort: $sort
+        format_in: $format
       ) {
         id
         title {
-          userPreferred
+          native
         }
         coverImage {
           extraLarge
@@ -29,6 +31,7 @@ const HomeDataQuery = gql`
         bannerImage
         season
         description
+        averageScore
       }
     }
   }
@@ -40,7 +43,8 @@ export const useHomeDataQuery = async () => {
     variables: {
       season: 'SPRING',
       seasonYear: 2022,
-      type: 'ANIME'
+      type: 'ANIME',
+      format: 'TV'
     }
   })
 

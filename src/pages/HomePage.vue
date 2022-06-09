@@ -7,6 +7,7 @@
       direction="horizontal"
       dot-type="line"
       dot-placement="right"
+      :interval="8000"
       style="z-index: 999"
     >
       <div
@@ -56,6 +57,7 @@
             {{ anime.overview }}
           </n-ellipsis>
         </div>
+        <div class="home-carousel-item-more">Learn More</div>
         <div class="home-carousel-item-episode">
           <div
             v-for="episode in anime.season_detail.episodes.slice(0, 3)"
@@ -102,7 +104,8 @@ import {
   getCorrectAnimeObject,
   formatAnimeName,
   compactImageUrl,
-  compactLowImageUrl
+  compactLowImageUrl,
+  getRandomAnimeList
 } from '../utils'
 import { useHomeDataQuery } from '../api/graphql'
 
@@ -112,8 +115,9 @@ const carouselList = ref([])
 
 onMounted(async () => {
   const result = await useHomeDataQuery()
-  const originAnimeNameList = result.Page.media.map(item =>
-    formatAnimeName(item.title.userPreferred)
+  const originAnimeNameList = getRandomAnimeList(
+    result.Page.media.map(item => formatAnimeName(item.title.native)),
+    5
   )
   const animeData = await Promise.all(
     originAnimeNameList.map(item => queryAnime(item))
@@ -143,7 +147,6 @@ onMounted(async () => {
   })
 
   carouselList.value = animeDetailData
-  console.log(carouselList.value)
 })
 </script>
 
@@ -249,6 +252,27 @@ onMounted(async () => {
   line-height: 1.5rem;
   color: rgba(255, 255, 255, 0.95);
   z-index: 999;
+  margin-bottom: 1rem;
+}
+
+.home-carousel-item-more {
+  border: none;
+  width: fit-content;
+  padding: 10px 28px;
+  z-index: 999;
+  font-size: 0.875rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.home-carousel-item-more:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
 .home-carousel-item-episode {
@@ -262,7 +286,7 @@ onMounted(async () => {
 .episode-item {
   width: 250px;
   height: 130px;
-  margin-left: 1.875rem;
+  margin-left: 1.5rem;
   border-radius: 12px;
   display: flex;
   background-position: center;
