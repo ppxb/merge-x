@@ -293,7 +293,13 @@ onMounted(async () => {
   background-repeat: no-repeat;
   background-size: cover;
   align-items: flex-end;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+}
+
+.episode-item:hover {
+  cursor: pointer;
+  box-shadow: 2px 4px 32px rgba(0, 0, 0, 0.3);
 }
 
 .episode-item-detail {
