@@ -46,7 +46,7 @@
                 ? anime.seasons[anime.seasons.length - 2].episode_count
                 : anime.seasons[anime.seasons.length - 1].episode_count
             }}
-            Episode
+            Episodes
           </div>
           <div class="divider"></div>
           <div>{{ anime.spoken_languages[0].english_name }}</div>
@@ -116,6 +116,8 @@ onMounted(async () => {
   const carouselDetailData = await Promise.all(
     carouselNeedQueryList.map(item => queryAnimeDetail(item.id))
   )
+
+  console.log(carouselDetailData)
 
   const animeSeasonData = await Promise.all(
     carouselDetailData.map(item => {
