@@ -2,9 +2,7 @@
   <n-scrollbar style="max-height: 100vh">
     <div class="discover">
       <div class="discover-title">DISCOVER & FILTER</div>
-      <div class="discover-subtitle">
-        Here will show your anime trending or filter your interest animes.
-      </div>
+      <div class="discover-subtitle">Show you what you want.</div>
     </div>
   </n-scrollbar>
 </template>
