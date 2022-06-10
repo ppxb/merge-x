@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <AppHeader />
     <n-carousel
       autoplay
       effect="fade"
@@ -105,8 +104,6 @@ import {
   compactLowImageUrl,
   getRandomAnimeList
 } from '../utils'
-
-import AppHeader from '../components/AppHeader.vue'
 
 const carouselList = ref([])
 
