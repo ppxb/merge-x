@@ -7,6 +7,7 @@
     <div class="app-header-nav">
       <router-link to="/" exact>HOME</router-link>
       <router-link to="/discover">DISCOVER</router-link>
+      <router-link to="/about">ABOUT</router-link>
     </div>
   </div>
 </template>
@@ -27,7 +28,7 @@ const currentRoute = router.currentRoute.value.path
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem 6rem;
+  padding: 2rem 2.5rem 2rem 6rem;
   background: transparent;
   z-index: 9999;
 }

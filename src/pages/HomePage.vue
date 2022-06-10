@@ -96,38 +96,32 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import {
-  queryAnime,
   queryAnimeDetail,
-  queryAnimeSeasonDetail
+  queryAnimeSeasonDetail,
+  queryDiscoverAnimeList
 } from '../api/rest'
 import {
-  getCorrectAnimeObject,
-  formatAnimeName,
   compactImageUrl,
   compactLowImageUrl,
   getRandomAnimeList
 } from '../utils'
-import { useHomeDataQuery } from '../api/graphql'
 
 import AppHeader from '../components/AppHeader.vue'
 
 const carouselList = ref([])
 
 onMounted(async () => {
-  const result = await useHomeDataQuery()
-  const originAnimeNameList = getRandomAnimeList(
-    result.Page.media.map(item => formatAnimeName(item.title.native)),
+  const originCarouselData = await queryDiscoverAnimeList(1, 2022)
+  const carouselNeedQueryList = getRandomAnimeList(
+    originCarouselData.results,
     5
   )
-  const animeData = await Promise.all(
-    originAnimeNameList.map(item => queryAnime(item))
+  const carouselDetailData = await Promise.all(
+    carouselNeedQueryList.map(item => queryAnimeDetail(item.id))
   )
-  const temp = getCorrectAnimeObject(animeData)
-  const animeDetailData = await Promise.all(
-    temp.map(item => queryAnimeDetail(item.id))
-  )
+
   const animeSeasonData = await Promise.all(
-    animeDetailData.map(item => {
+    carouselDetailData.map(item => {
       const currentSeason = item.seasons
         .filter(season => season.episode_count > 0 && season.season_number > 0)
         .pop()
@@ -136,10 +130,10 @@ onMounted(async () => {
   )
 
   animeSeasonData.map(item => {
-    for (let i = 0; i < animeDetailData.length; i++) {
-      if (animeDetailData[i].seasons.some(season => season.id === item.id)) {
-        animeDetailData[i] = {
-          ...animeDetailData[i],
+    for (let i = 0; i < carouselDetailData.length; i++) {
+      if (carouselDetailData[i].seasons.some(season => season.id === item.id)) {
+        carouselDetailData[i] = {
+          ...carouselDetailData[i],
           ...{ season_detail: item }
         }
         continue
@@ -147,8 +141,7 @@ onMounted(async () => {
     }
   })
 
-  carouselList.value = animeDetailData
-  // console.log(carouselList.value)
+  carouselList.value = carouselDetailData
 })
 </script>
 
