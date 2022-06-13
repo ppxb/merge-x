@@ -11,6 +11,7 @@
     "serve": "concurrently -k \"pnpm dev\" \"pnpm electron\""
   },
   "dependencies": {
+    "@vueuse/core": "^8.6.0",
     "axios": "^0.27.2",
     "graphql": "^16.5.0",
     "graphql-tag": "^2.12.6",

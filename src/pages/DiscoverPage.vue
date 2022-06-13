@@ -10,7 +10,7 @@
           :key="item.id"
         >
           <img
-            :src="compactImageUrl(item.poster_path)"
+            v-lazy-image="compactImageUrl(item.poster_path)"
             class="discover-list-item-poster"
           />
           <n-ellipsis
@@ -20,8 +20,12 @@
           >
             {{ item.name }}
           </n-ellipsis>
-          <div class="discover-item-year">
-            {{ item.first_air_date.split('-')[0] }}
+          <div class="discover-item-info">
+            <div class="discover-item-info-text">
+              {{ item.first_air_date.split('-')[0] }}
+            </div>
+            <div class="divider-sm"></div>
+            <div class="discover-item-info-text">TV</div>
           </div>
           <div class="discover-item-rate">
             <span class="hint-tag">TMDB</span>{{ item.vote_average }}
@@ -89,6 +93,7 @@ onMounted(async () => {
   margin-bottom: 6px;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #222;
 }
 
 .discover-list-item-poster:hover {
@@ -100,7 +105,12 @@ onMounted(async () => {
   font-weight: 600;
 }
 
-.discover-item-year {
+.discover-item-info {
+  display: flex;
+  align-items: center;
+}
+
+.discover-item-info-text {
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.7);
 }
@@ -122,5 +132,12 @@ onMounted(async () => {
   color: #c8e608;
   margin-right: 6px;
   font-weight: 700;
+}
+
+.divider-sm {
+  width: 2px;
+  height: 12px;
+  margin: 0 0.875rem;
+  background-color: rgba(255, 255, 255, 0.35);
 }
 </style>

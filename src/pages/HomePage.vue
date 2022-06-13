@@ -38,8 +38,6 @@
             {{ anime.first_air_date.split('-')[0] }}
           </div>
           <div class="divider"></div>
-          <div>{{ anime.episode_run_time[0] }} Mins</div>
-          <div class="divider"></div>
           <div>
             {{
               anime.seasons[anime.seasons.length - 1].episode_count === 0
@@ -138,6 +136,7 @@ onMounted(async () => {
     }
   })
 
+  console.log(carouselDetailData)
   carouselList.value = carouselDetailData
 })
 </script>
