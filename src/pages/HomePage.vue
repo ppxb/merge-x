@@ -136,7 +136,6 @@ onMounted(async () => {
     }
   })
 
-  console.log(carouselDetailData)
   carouselList.value = carouselDetailData
 })
 </script>

@@ -47,7 +47,12 @@ const discoverList = ref([])
 const onScroll = e => {
   const clientHeight = e.target.clientHeight
   const scrollTop = e.target.scrollTop
-  if (clientHeight + scrollTop >= discoverPage.value * 2000) {
+  console.log(
+    clientHeight + scrollTop,
+    discoverPage.value,
+    discoverPage.value * 2000
+  )
+  if (clientHeight + scrollTop >= discoverPage.value * 1400) {
     discoverPage.value++
     fetchData()
   }
