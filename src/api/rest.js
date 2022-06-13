@@ -18,7 +18,7 @@ const get = (url, params) => {
 
 export const queryDiscoverAnimeList = (page, year) => {
   return get(
-    `/discover/tv?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}&sort_by=popularity.desc&with_genres=16&with_original_language=ja&first_air_date_year=${year}&page=${page}`
+    `/discover/tv?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}&sort_by=popularity.desc&with_genres=16&with_original_language=ja&with_origin_country=JP&first_air_date_year=${year}&page=${page}`
   )
 }
 
