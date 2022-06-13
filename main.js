@@ -17,7 +17,7 @@ const createWindow = () => {
   //   win.loadFile('dist/index.html')
   win.once('ready-to-show', () => win.show())
   win.loadURL('http://localhost:3000')
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
