@@ -1,7 +1,7 @@
 <template>
   <div class="discover">
     <div class="discover-title">DISCOVER & FILTER</div>
-    <div class="discover-subtitle">Show you what you want.</div>
+    <div class="discover-subtitle">Here are rencently trending animes.</div>
     <n-scrollbar style="max-height: 100vh" trigger="none">
       <div class="discover-list">
         <div
@@ -60,6 +60,7 @@ onMounted(async () => {
 
 .discover-subtitle {
   color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1rem;
 }
 
 .discover-list {
@@ -71,18 +72,27 @@ onMounted(async () => {
 
 .discover-list-item {
   flex-basis: 200px;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+.discover-list-item:hover {
+  cursor: pointer;
 }
 
 .discover-list-item-poster {
   width: 100%;
   height: 280px;
   object-fit: cover;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.discover-list-item-poster:hover {
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.7);
 }
 
 .discover-item-name {
@@ -100,7 +110,7 @@ onMounted(async () => {
   right: 8px;
   top: 8px;
   padding: 2px 10px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 12px;
   border-radius: 6px;
