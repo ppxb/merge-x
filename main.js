@@ -8,7 +8,7 @@ const createWindow = () => {
     resizable: false,
     show: false,
     frame: false,
-    backgroundColor: '#16181e',
+    backgroundColor: '#0F0F0F',
     webPreferences: {
       preload: join(__dirname, 'preload.js')
     }

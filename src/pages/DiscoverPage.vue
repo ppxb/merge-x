@@ -2,7 +2,7 @@
   <div class="discover">
     <div class="discover-title">DISCOVER & FILTER</div>
     <div class="discover-subtitle">Here are rencently trending animes.</div>
-    <n-scrollbar style="max-height: 100vh" trigger="none">
+    <n-scrollbar style="max-height: 100vh" trigger="none" :on-scroll="onScroll">
       <div class="discover-list">
         <div
           class="discover-list-item"
@@ -41,12 +41,28 @@ import { onMounted, ref } from 'vue'
 import { queryDiscoverAnimeList } from '../api/rest'
 import { compactImageUrl } from '../utils'
 
+const discoverPage = ref(1)
 const discoverList = ref([])
 
+const onScroll = e => {
+  const clientHeight = e.target.clientHeight
+  const scrollTop = e.target.scrollTop
+  if (clientHeight + scrollTop >= discoverPage.value * 2000) {
+    discoverPage.value++
+    fetchData()
+  }
+}
+
 onMounted(async () => {
-  const { results } = await queryDiscoverAnimeList(1, 2022)
+  const { results } = await queryDiscoverAnimeList(discoverPage.value)
   discoverList.value = results
 })
+
+const fetchData = async () => {
+  const { results } = await queryDiscoverAnimeList(discoverPage.value)
+  if (results === []) return
+  discoverList.value = [...discoverList.value, ...results]
+}
 </script>
 
 <style scoped>
@@ -92,12 +108,7 @@ onMounted(async () => {
   object-fit: cover;
   margin-bottom: 6px;
   border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #222;
-}
-
-.discover-list-item-poster:hover {
-  box-shadow: 0 0 32px rgba(0, 0, 0, 0.7);
 }
 
 .discover-item-name {
@@ -117,8 +128,8 @@ onMounted(async () => {
 
 .discover-item-rate {
   position: absolute;
-  right: 8px;
-  top: 8px;
+  left: 8px;
+  bottom: 4.25rem;
   padding: 2px 10px;
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
