@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const TMDB_API_KEY = 'bc82e6dfd48db14ca6a9139201fc58c2'
-// const TMDB_API_LANGUAGE = 'ja-JP'
-const TMDB_API_LANGUAGE = 'zh-CN'
+const TMDB_API_LANGUAGE = 'ja-JP'
+// const TMDB_API_LANGUAGE = 'zh-CN'
 
 axios.defaults.timeout = 10000
 axios.defaults.baseURL = 'https://api.themoviedb.org/3'
@@ -18,7 +18,7 @@ const get = (url, params) => {
 
 export const queryDiscoverAnimeList = (page, year) => {
   return get(
-    `/discover/tv?api_key=${TMDB_API_KEY}&language=${TMDB_API_KEY}&sort_by=popularity.desc&with_genres=16&with_original_language=ja&first_air_date_year=${year}&page=${page}`
+    `/discover/tv?api_key=${TMDB_API_KEY}&language=${TMDB_API_LANGUAGE}&sort_by=popularity.desc&with_genres=16&with_original_language=ja&first_air_date_year=${year}&page=${page}`
   )
 }
 

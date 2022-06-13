@@ -117,8 +117,6 @@ onMounted(async () => {
     carouselNeedQueryList.map(item => queryAnimeDetail(item.id))
   )
 
-  console.log(carouselDetailData)
-
   const animeSeasonData = await Promise.all(
     carouselDetailData.map(item => {
       const currentSeason = item.seasons
