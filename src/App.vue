@@ -2,6 +2,7 @@
   <n-config-provider :theme-overrides="themeOverrides">
     <n-notification-provider>
       <n-message-provider>
+        <AppController />
         <AppHeader />
         <router-view v-slot="{ Component }">
           <keep-alive>
@@ -15,6 +16,7 @@
 
 <script setup>
 import AppHeader from './components/AppHeader.vue'
+import AppController from './components/AppController.vue'
 
 const themeOverrides = {
   Scrollbar: {

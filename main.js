@@ -17,7 +17,13 @@ const createWindow = () => {
   //   win.loadFile('dist/index.html')
   win.once('ready-to-show', () => win.show())
   win.loadURL('http://localhost:3000')
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
+
+  ipcMain.on('close-app', e => {
+    const webContents = e.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.close()
+  })
 }
 
 app.whenReady().then(() => {
@@ -25,12 +31,6 @@ app.whenReady().then(() => {
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-
-  ipcMain.on('close-app', e => {
-    const webContents = e.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    win.close()
   })
 })
 

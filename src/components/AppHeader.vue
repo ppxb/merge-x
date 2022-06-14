@@ -8,7 +8,6 @@
       <router-link to="/" exact>HOME</router-link>
       <router-link to="/discover">DISCOVER</router-link>
       <router-link to="/about">ABOUT</router-link>
-      <div @click="close" style="color: #fff; font-size: 2rem">X</div>
     </div>
   </div>
 </template>
@@ -19,15 +18,13 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const currentRoute = router.currentRoute.value.path
 
-const close = () => {
-  console.log(window)
-}
+const close = () => window.ipc.closeApp()
 </script>
 
 <style scoped>
 .app-header {
   position: absolute;
-  top: 0;
+  top: 1.5rem;
   left: 0;
   right: 0;
   display: flex;
@@ -66,6 +63,7 @@ const close = () => {
   font-weight: 500;
   margin-left: 2rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-app-region: no-drag;
 }
 
 .active {

@@ -4,6 +4,8 @@ import { createClient } from 'villus'
 
 import lazyImage from './directive/lazyImage'
 
+import AppIcon from './components/AppIcon.vue'
+
 import App from './App.vue'
 import router from './router'
 import './App.css'
@@ -22,6 +24,8 @@ app.use(router)
 
 // directives
 app.directive('lazy-image', lazyImage)
+
+app.component('app-icon', AppIcon)
 
 // hotkeys
 window.addEventListener('keydown', event => {
