@@ -2,7 +2,11 @@
   <div class="discover">
     <div class="discover-title">DISCOVER & FILTER</div>
     <div class="discover-subtitle">Here are rencently trending animes.</div>
-    <n-scrollbar style="max-height: 100vh" trigger="none" :on-scroll="onScroll">
+    <n-scrollbar
+      style="max-height: 100vh; -webkit-app-region: no-drag"
+      trigger="none"
+      :on-scroll="onScroll"
+    >
       <div class="discover-list">
         <div
           class="discover-list-item"

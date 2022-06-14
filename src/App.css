@@ -7,10 +7,12 @@ body {
   margin: 0;
   padding: 0;
   background-color: #0f0f0f;
+  -webkit-app-region: drag;
 }
 
 a {
   text-decoration: none;
+  -webkit-app-region: no-drag;
 }
 
 #app {

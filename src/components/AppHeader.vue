@@ -8,6 +8,7 @@
       <router-link to="/" exact>HOME</router-link>
       <router-link to="/discover">DISCOVER</router-link>
       <router-link to="/about">ABOUT</router-link>
+      <div @click="close" style="color: #fff; font-size: 2rem">X</div>
     </div>
   </div>
 </template>
@@ -17,6 +18,10 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const currentRoute = router.currentRoute.value.path
+
+const close = () => {
+  console.log(window)
+}
 </script>
 
 <style scoped>
@@ -42,6 +47,7 @@ const currentRoute = router.currentRoute.value.path
   font-weight: 700;
   color: #fff;
   line-height: 1.5rem;
+  -webkit-app-region: no-drag;
 }
 
 .subtitle {

@@ -1,5 +1,5 @@
-const { BrowserWindow, app } = require('electron')
-const { join } = require('path')
+const { BrowserWindow, app, ipcMain } = require('electron')
+const path = require('path')
 
 const createWindow = () => {
   const win = new BrowserWindow({
@@ -10,14 +10,14 @@ const createWindow = () => {
     frame: false,
     backgroundColor: '#0F0F0F',
     webPreferences: {
-      preload: join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js')
     }
   })
 
   //   win.loadFile('dist/index.html')
   win.once('ready-to-show', () => win.show())
   win.loadURL('http://localhost:3000')
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 }
 
 app.whenReady().then(() => {
@@ -25,6 +25,12 @@ app.whenReady().then(() => {
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+
+  ipcMain.on('close-app', e => {
+    const webContents = e.sender
+    const win = BrowserWindow.fromWebContents(webContents)
+    win.close()
   })
 })
 

@@ -256,6 +256,7 @@ onMounted(async () => {
   background-color: rgba(255, 255, 255, 0.25);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(20px);
+  -webkit-app-region: no-drag;
 }
 
 .home-carousel-item-more:hover {
@@ -284,6 +285,7 @@ onMounted(async () => {
   align-items: flex-end;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow: hidden;
+  -webkit-app-region: no-drag;
 }
 
 .episode-item:hover {
@@ -325,6 +327,7 @@ onMounted(async () => {
   position: absolute;
   bottom: 3.5rem;
   left: 6rem;
+  -webkit-app-region: no-drag;
 }
 
 .custom-dots li {
