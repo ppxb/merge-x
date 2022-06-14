@@ -19,11 +19,9 @@ const createWindow = () => {
   win.loadURL('http://localhost:3000')
   // win.webContents.openDevTools()
 
-  ipcMain.on('close-app', e => {
-    const webContents = e.sender
-    const win = BrowserWindow.fromWebContents(webContents)
-    win.close()
-  })
+  ipcMain.on('close-app', () => win.close())
+
+  ipcMain.on('min-app', () => win.minimize())
 }
 
 app.whenReady().then(() => {

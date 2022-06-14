@@ -36,6 +36,7 @@ const svgClass = computed(() => {
 .svg-icon {
   width: 1.5em;
   height: 1.5em;
+  margin-left: 1rem;
   -webkit-app-region: no-drag;
 }
 
