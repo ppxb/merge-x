@@ -47,7 +47,7 @@
             Episodes
           </div>
           <div class="divider"></div>
-          <div>{{ anime.spoken_languages[0].english_name }}</div>
+          <div>Japan</div>
         </div>
         <div class="home-carousel-item-overview">
           <n-ellipsis style="max-width: 560px" line-clamp="3" :tooltip="false">
@@ -176,7 +176,7 @@ const goAnime = id => {
   right: 0;
   bottom: 0;
   background-image: linear-gradient(
-    0deg,
+    to bottom,
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 0.3) 45%,
     rgba(0, 0, 0, 0.15) 55%,

@@ -4,7 +4,7 @@
       <div>MERGE</div>
       <div class="subtitle">ANIME</div>
     </div>
-    <div class="app-header-nav" v-if="showLink">
+    <div class="app-header-nav" v-show="showLink">
       <router-link to="/" exact>HOME</router-link>
       <router-link to="/discover">DISCOVER</router-link>
       <router-link to="/about">ABOUT</router-link>
@@ -23,6 +23,7 @@ watch(
   () => router.currentRoute.value.path,
   (newPath, _) => {
     if (newPath.includes('/anime')) showLink.value = false
+    else showLink.value = true
   },
   { immediate: true }
 )

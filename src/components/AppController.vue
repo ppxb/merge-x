@@ -8,8 +8,6 @@
 </template>
 
 <script setup>
-import AppIcon from '../components/AppIcon.vue'
-
 const closeApp = () => window.ipc.closeApp()
 const minApp = () => window.ipc.minApp()
 const openSetting = () => console.log('setting panle is opened')
