@@ -1,8 +1,25 @@
 const { BrowserWindow, app, ipcMain } = require('electron')
-const path = require('path')
+const { release } = require('os')
+const { join } = require('path')
 
-const createWindow = () => {
-  const win = new BrowserWindow({
+// disable GPU Acceleration for Windows 7
+if (release().startsWith('6.1')) app.disableHardwareAcceleration()
+
+// Set application name for Windows 10+ notifications
+if (process.platform === 'win32') app.setAppUserModelId(app.getName())
+
+// Judgement application have got thread lock for single instance
+if (!app.requestSingleInstanceLock()) {
+  app.quit()
+  process.exit(0)
+}
+
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+
+let win
+
+const createWindow = async () => {
+  win = new BrowserWindow({
     width: 1336,
     height: 768,
     resizable: false,
@@ -10,7 +27,7 @@ const createWindow = () => {
     frame: false,
     backgroundColor: '#0F0F0F',
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: join(__dirname, 'preload.js')
     }
   })
 
@@ -24,12 +41,12 @@ const createWindow = () => {
   ipcMain.on('min-app', () => win.minimize())
 }
 
-app.whenReady().then(() => {
-  createWindow()
+app.whenReady().then(createWindow)
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+app.on('activate', () => {
+  const wins = BrowserWindow.getAllWindows()
+  if (wins.length) wins[0].focus()
+  else createWindow()
 })
 
 app.on('window-all-closed', () => {

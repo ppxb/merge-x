@@ -11,6 +11,7 @@
         <div
           class="discover-list-item"
           v-for="item in discoverList"
+          @click="goAnime(item.id)"
           :key="item.id"
         >
           <img
@@ -42,9 +43,11 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { queryDiscoverAnimeList } from '../api/rest'
 import { compactImageUrl } from '../utils'
 
+const router = useRouter()
 const discoverPage = ref(1)
 const discoverList = ref([])
 
@@ -67,6 +70,12 @@ const fetchData = async () => {
   const { results } = await queryDiscoverAnimeList(discoverPage.value)
   if (results === []) return
   discoverList.value = [...discoverList.value, ...results]
+}
+
+const goAnime = id => {
+  router.push({
+    path: `/anime/${id}`
+  })
 }
 </script>
 

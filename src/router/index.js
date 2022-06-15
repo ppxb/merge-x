@@ -11,6 +11,11 @@ const routes = [
     path: '/about',
     component: () => import('../pages/AboutPage.vue'),
     redirect: '/'
+  },
+  {
+    path: '/anime/:id',
+    name: 'AnimePage',
+    component: () => import('../pages/AnimePage.vue')
   }
 ]
 

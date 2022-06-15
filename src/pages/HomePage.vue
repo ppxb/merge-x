@@ -54,7 +54,9 @@
             {{ anime.overview.trim() }}
           </n-ellipsis>
         </div>
-        <div class="home-carousel-item-more">了解更多</div>
+        <div class="home-carousel-item-more" @click="goAnime(anime.id)">
+          了解更多
+        </div>
         <div class="home-carousel-item-episode">
           <div
             v-for="episode in anime.season_detail.episodes.slice(0, 3)"
@@ -92,6 +94,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import {
   queryAnimeDetail,
   queryAnimeSeasonDetail,
@@ -103,6 +106,7 @@ import {
   getRandomAnimeList
 } from '../utils'
 
+const router = useRouter()
 const carouselList = ref([])
 
 onMounted(async () => {
@@ -138,6 +142,12 @@ onMounted(async () => {
 
   carouselList.value = carouselDetailData
 })
+
+const goAnime = id => {
+  router.push({
+    path: `/anime/${id}`
+  })
+}
 </script>
 
 <style scoped>
