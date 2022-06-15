@@ -56,12 +56,13 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { compactImageUrl } from '../utils'
 
 import { queryAnimeDetail, queryAnimeSeasonDetail } from '../api/rest'
+import { useCastDataQuery } from '../api/graphql'
 
 const route = useRoute()
 const router = useRouter()
@@ -76,6 +77,9 @@ onMounted(async () => {
     )
   )
 
+  const data = await useCastDataQuery(animeData.original_name)
+  console.log(data)
+
   const finalAnimeData = {
     ...animeData,
     seasons_detail: animeSeasonData
@@ -84,17 +88,6 @@ onMounted(async () => {
   anime.value = finalAnimeData
   console.log(anime.value)
 })
-
-const animeSeasonNumber = computed(
-  () => anime.value.seasons.filter(item => item.season_number > 0).length
-)
-
-const animeSeasonEpisodes = computed(() =>
-  anime.value.seasons_detail.reduce(
-    (acc, item) => acc + item.episodes.length,
-    0
-  )
-)
 
 const goBack = () => router.back()
 </script>

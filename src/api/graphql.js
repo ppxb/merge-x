@@ -1,51 +1,49 @@
 import { gql } from 'graphql-tag'
 import { useQuery } from 'villus'
 
-const HomeDataQuery = gql`
+const CastDataQuery = gql`
   query (
-    $id: Int
     $type: MediaType
-    $season: MediaSeason
-    $seasonYear: Int
-    $format: [MediaFormat]
+    $search: String
     $sort: [MediaSort] = [POPULARITY_DESC, SCORE_DESC]
   ) {
-    Page(page: 1, perPage: 20) {
-      media(
-        id: $id
-        type: $type
-        season: $season
-        seasonYear: $seasonYear
-        sort: $sort
-        format_in: $format
-      ) {
-        id
-        title {
-          native
-        }
-        coverImage {
-          extraLarge
-          large
-          color
-        }
-        bannerImage
-        season
-        description
-        averageScore
+    Media(search: $search, type: $type, sort: $sort) {
+      title {
+        userPreferred
+        native
       }
+      characterPreview: characters(perPage: 6, sort: [ROLE, RELEVANCE, ID]) {
+        edges {
+          voiceActors(language: JAPANESE, sort: [RELEVANCE, ID]) {
+            id
+            name {
+              userPreferred
+            }
+            language: languageV2
+            image {
+              large
+            }
+          }
+          node {
+            id
+            name {
+              userPreferred
+            }
+            image {
+              large
+            }
+          }
+        }
+      }
+      averageScore
     }
   }
 `
 
-export const useHomeDataQuery = async () => {
+export const useCastDataQuery = async keyword => {
   const { data } = await useQuery({
-    query: HomeDataQuery,
-    variables: {
-      season: 'SPRING',
-      seasonYear: 2022,
-      type: 'ANIME',
-      format: 'TV'
-    }
+    query: CastDataQuery,
+    variables: { type: 'ANIME', sort: 'SEARCH_MATCH', search: `"${keyword}` }
   })
 
   return data.value
