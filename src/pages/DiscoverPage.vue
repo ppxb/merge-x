@@ -18,23 +18,26 @@
             v-lazy-image="compactImageUrl(item.poster_path)"
             class="discover-list-item-poster"
           />
-          <n-ellipsis
-            style="max-width: 180px"
-            :tooltip="false"
-            class="discover-item-name"
-          >
-            {{ item.name }}
-          </n-ellipsis>
-          <div class="discover-item-info">
-            <div class="discover-item-info-text">
-              {{ item.first_air_date.split('-')[0] }}
+          <div class="discover-item-detail">
+            <div class="discover-item-origin">
+              <div>{{ item.origin_country[0] }}</div>
+              <div class="divider-sm"></div>
+              <div style="color: #f5c518">
+                {{ item.first_air_date.split('-')[0] }}
+              </div>
             </div>
-            <div class="divider-sm"></div>
-            <div class="discover-item-info-text">TV</div>
+            <n-ellipsis
+              style="max-width: 180px"
+              :tooltip="false"
+              class="discover-item-name"
+            >
+              {{ item.name }}
+            </n-ellipsis>
+            <div class="discover-item-rate">
+              <span class="hint-tag">TMDb</span> {{ item.vote_average }}
+            </div>
           </div>
-          <div class="discover-item-rate">
-            <span class="hint-tag">TMDB</span>{{ item.vote_average }}
-          </div>
+          <div class="discover-item-type">TV Series</div>
         </div>
       </div>
     </n-scrollbar>
@@ -55,7 +58,7 @@ const onScroll = e => {
   const clientHeight = e.target.clientHeight
   const scrollTop = e.target.scrollTop
 
-  if (clientHeight + scrollTop >= discoverPage.value * 1400) {
+  if (clientHeight + scrollTop >= discoverPage.value * 1200) {
     discoverPage.value++
     fetchData()
   }
@@ -106,7 +109,7 @@ const goAnime = id => {
 
 .discover-list-item {
   flex-basis: 200px;
-  margin-bottom: 2rem;
+  margin-bottom: 1.25rem;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -117,35 +120,52 @@ const goAnime = id => {
 }
 
 .discover-list-item-poster {
-  width: 260px;
-  height: 340px;
+  width: 210px;
+  height: 300px;
   object-fit: cover;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   border-radius: 8px;
   background-color: #222;
 }
 
+.discover-item-detail {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  border-radius: 0 0 8px 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(20px);
+  padding: 4px 12px 8px 12px;
+}
+
+.discover-item-origin {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
 .discover-item-name {
-  font-size: 1.225rem;
+  font-size: 18px;
   font-weight: 600;
 }
 
-.discover-item-info {
+.discover-item-rate {
   display: flex;
   align-items: center;
-}
-
-.discover-item-info-text {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
 }
 
-.discover-item-rate {
+.discover-item-type {
   position: absolute;
   left: 8px;
-  bottom: 4.25rem;
+  top: 8px;
   padding: 4px 8px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
   font-size: 12px;
   border-radius: 6px;
@@ -154,9 +174,14 @@ const goAnime = id => {
 }
 
 .hint-tag {
-  color: #f5c518;
+  background-color: #f5c518;
+  padding: 0 4px;
+  color: #222;
+  font-size: 12px;
   margin-right: 6px;
-  font-weight: 700;
+  border-radius: 2px;
+  font-family: Anton;
+  font-weight: 400;
 }
 
 .divider-sm {
