@@ -4,13 +4,29 @@
       <div>MERGE</div>
       <div class="subtitle">ANIME</div>
     </div>
-    <div class="app-header-nav">
+    <div class="app-header-nav" v-if="showLink">
       <router-link to="/" exact>HOME</router-link>
       <router-link to="/discover">DISCOVER</router-link>
       <router-link to="/about">ABOUT</router-link>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const showLink = ref(true)
+
+watch(
+  () => router.currentRoute.value.path,
+  (newPath, _) => {
+    if (newPath.includes('/anime')) showLink.value = false
+  },
+  { immediate: true }
+)
+</script>
 
 <style scoped>
 .app-header {

@@ -38,8 +38,8 @@ const svgClass = computed(() => {
   height: 1.875em;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
-  padding: 2px 2px;
-  margin-left: 1rem;
+  padding: 4px 4px;
+  margin-left: 0.875rem;
   backdrop-filter: blur(20px);
   -webkit-app-region: no-drag;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

@@ -193,12 +193,13 @@ const goAnime = id => {
 
 .home-carousel-item-status-rate {
   padding: 2px 10px;
-  background-color: #c8e608;
+  background-color: #f5c518;
   color: #222;
   font-size: 12px;
   font-weight: 700;
   border-radius: 12px 4px;
   margin-right: 1rem;
+  font-family: Anton;
 }
 
 .hint-tag {
@@ -305,7 +306,7 @@ const goAnime = id => {
 
 .episode-item-detail {
   width: 100%;
-  padding: 6px 12px;
+  padding: 4px 12px;
   backdrop-filter: blur(20px);
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
@@ -319,7 +320,6 @@ const goAnime = id => {
 }
 
 .episode-item-detail-text .title {
-  margin-top: 2px;
   color: rgba(255, 255, 255, 0.5);
 }
 

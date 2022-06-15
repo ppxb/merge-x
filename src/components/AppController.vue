@@ -1,5 +1,7 @@
 <template>
   <div class="app-controller">
+    <app-icon name="language" @click="openSetting" />
+    <app-icon name="setting" @click="openSetting" />
     <app-icon name="mins" @click="minApp" />
     <app-icon name="close" @click="closeApp" />
   </div>
@@ -10,6 +12,7 @@ import AppIcon from '../components/AppIcon.vue'
 
 const closeApp = () => window.ipc.closeApp()
 const minApp = () => window.ipc.minApp()
+const openSetting = () => console.log('setting panle is opened')
 </script>
 
 <style scoped>
