@@ -117,8 +117,8 @@ const goAnime = id => {
 }
 
 .discover-list-item-poster {
-  width: 100%;
-  height: 280px;
+  width: 260px;
+  height: 340px;
   object-fit: cover;
   margin-bottom: 6px;
   border-radius: 8px;
@@ -144,7 +144,7 @@ const goAnime = id => {
   position: absolute;
   left: 8px;
   bottom: 4.25rem;
-  padding: 2px 10px;
+  padding: 4px 8px;
   background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 12px;
@@ -154,7 +154,7 @@ const goAnime = id => {
 }
 
 .hint-tag {
-  color: #c8e608;
+  color: #f5c518;
   margin-right: 6px;
   font-weight: 700;
 }

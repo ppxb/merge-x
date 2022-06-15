@@ -34,13 +34,19 @@ const svgClass = computed(() => {
 </script>
 <style>
 .svg-icon {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.875em;
+  height: 1.875em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 2px 2px;
   margin-left: 1rem;
+  backdrop-filter: blur(20px);
   -webkit-app-region: no-drag;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .svg-icon:hover {
+  background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
 }
 </style>
