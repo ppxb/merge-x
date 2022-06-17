@@ -24,6 +24,15 @@
         class="anime-detail-poster"
       />
       <div class="anime-detail-info">
+        <div class="anime-detail-rate">
+          <div class="rate-box">
+            <span class="hint-tag">TMDb</span> {{ anime.vote_average }}
+          </div>
+          <div class="rate-box">
+            <img src="https://anilist.co/img/icons/icon.svg" class="al-tag" />
+            {{ anime.cast_detail.averageScore }}
+          </div>
+        </div>
         <div class="anime-detail-status">
           <div class="anime-detail-info-second-text">TV</div>
           <div class="divider-sm"></div>
@@ -37,17 +46,42 @@
         </div>
         <div class="anime-detail-overview">
           <n-ellipsis style="max-width: 500px" line-clamp="6" :tooltip="false">
-            {{ anime.overview.trim() }}
+            {{
+              anime.overview
+                ? anime.overview.trim()
+                : 'SORRY , THERE IS NO DESCRIPTION ABOUT THIS ANIME.'
+            }}
           </n-ellipsis>
         </div>
         <div class="anime-detail-genres">
           <div
             class="anime-detail-genres-item"
-            v-for="(genre, index) in anime.genres"
+            v-for="(genre, index) in anime.genres.slice(0, 4)"
             :key="genre.name"
           >
             <div class="divider-sm" v-if="index != 0"></div>
             {{ genre.name }}
+          </div>
+        </div>
+      </div>
+      <div class="anime-detail-cast">
+        <div
+          class="anime-detail-cast-item"
+          v-for="cast in anime.cast_detail.characterPreview.edges.slice(0, 4)"
+        >
+          <img :src="cast.node.image.large" class="cast-item-image" />
+          <div class="cast-item-name">
+            <div class="cast-item-name-role">Main Role</div>
+            <div class="cast-item-name-native">
+              <n-ellipsis :tooltip="false" style="max-width: 180px">
+                {{ cast.node.name.native }}
+              </n-ellipsis>
+            </div>
+            <div class="cast-item-name-prefer">
+              <n-ellipsis :tooltip="false" style="max-width: 180px">
+                {{ cast.node.name.userPreferred }}
+              </n-ellipsis>
+            </div>
           </div>
         </div>
       </div>
@@ -77,12 +111,12 @@ onMounted(async () => {
     )
   )
 
-  const data = await useCastDataQuery(animeData.original_name)
-  console.log(data)
+  const castData = await useCastDataQuery(animeData.original_name)
 
   const finalAnimeData = {
     ...animeData,
-    seasons_detail: animeSeasonData
+    seasons_detail: animeSeasonData,
+    cast_detail: castData.Media
   }
 
   anime.value = finalAnimeData
@@ -136,13 +170,13 @@ const goBack = () => router.back()
 }
 
 .anime-detail-poster {
-  width: 240px;
-  height: 360px;
+  width: 260px;
+  height: 400px;
   object-fit: cover;
   z-index: 999;
   border-radius: 8px;
   background-color: #222;
-  margin-right: 4rem;
+  margin-right: 3rem;
 }
 
 .anime-detail-info {
@@ -152,9 +186,47 @@ const goBack = () => router.back()
   z-index: 999;
 }
 
+.anime-detail-cast {
+  margin-left: auto;
+  z-index: 999;
+}
+
 .anime-detail-status {
   display: flex;
   align-items: center;
+}
+
+.anime-detail-rate {
+  display: flex;
+  align-items: center;
+  z-index: 999;
+  margin-bottom: 8px;
+}
+
+.rate-box {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+
+.hint-tag {
+  background-color: #f5c518;
+  padding: 0 4px;
+  color: #222;
+  font-size: 12px;
+  margin-right: 8px;
+  border-radius: 2px;
+  font-family: Anton;
+  font-weight: 400;
+}
+
+.al-tag {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
 }
 
 .anime-detail-info-second-text {
@@ -184,5 +256,49 @@ const goBack = () => router.back()
   height: 12px;
   margin: 0 0.875rem;
   background-color: rgba(255, 255, 255, 0.35);
+}
+
+.anime-detail-cast {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-detail-cast-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 280px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+}
+
+.cast-item-image {
+  width: 60px;
+  height: 81px;
+  object-fit: cover;
+  margin-right: 1.1rem;
+  border-radius: 6px 0 0 6px;
+}
+
+.cast-item-name {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  padding: 4px 0;
+}
+
+.cast-item-name-role {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+}
+
+.cast-item-name-native {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cast-item-name-prefer {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
 }
 </style>

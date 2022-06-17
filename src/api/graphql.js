@@ -28,6 +28,7 @@ const CastDataQuery = gql`
             id
             name {
               userPreferred
+              native
             }
             image {
               large
