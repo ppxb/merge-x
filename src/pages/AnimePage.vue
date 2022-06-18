@@ -45,7 +45,7 @@
           <div class="anime-detail-info-second-text">Japan</div>
         </div>
         <div class="anime-detail-overview">
-          <n-ellipsis style="max-width: 500px" line-clamp="4" :tooltip="false">
+          <n-ellipsis style="max-width: 500px" line-clamp="5" :tooltip="false">
             {{
               anime.overview
                 ? anime.overview.trim()
@@ -68,7 +68,12 @@
           style="max-height: 200px; -webkit-app-region: no-drag"
           class="anime-detail-season-list"
         >
-          <div class="season-item" v-for="item in anime.seasons_detail">
+          <div
+            class="season-item"
+            v-for="item in anime.seasons_detail.filter(
+              season => season.episodes.length > 0
+            )"
+          >
             <div class="season-item-title">
               <div class="item-title-text">
                 <n-ellipsis style="max-width: 260px" :tooltip="false">
@@ -83,7 +88,7 @@
               <div class="item-duration-container">
                 <div class="item-duration-text">Avg Duration</div>
                 <div class="item-duration-time">
-                  {{ anime.episode_run_time[0] }}
+                  {{ anime.episode_run_time[0] }} Mins
                 </div>
               </div>
               <app-icon name="right" />
