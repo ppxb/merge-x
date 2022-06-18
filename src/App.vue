@@ -20,7 +20,8 @@ import AppController from './components/AppController.vue'
 
 const themeOverrides = {
   Scrollbar: {
-    color: 'rgba(255, 255, 255, 0)'
+    color: 'rgba(255, 255, 255, 0)',
+    colorHover: 'rgba(255, 255, 255, 0)'
   }
 }
 </script>

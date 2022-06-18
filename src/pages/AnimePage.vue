@@ -45,7 +45,7 @@
           <div class="anime-detail-info-second-text">Japan</div>
         </div>
         <div class="anime-detail-overview">
-          <n-ellipsis style="max-width: 500px" line-clamp="6" :tooltip="false">
+          <n-ellipsis style="max-width: 500px" line-clamp="4" :tooltip="false">
             {{
               anime.overview
                 ? anime.overview.trim()
@@ -63,11 +63,12 @@
             {{ genre.name }}
           </div>
         </div>
+        <div class="anime-detail-season">Seasons</div>
       </div>
       <div class="anime-detail-cast">
         <div
           class="anime-detail-cast-item"
-          v-for="cast in anime.cast_detail.characterPreview.edges.slice(0, 4)"
+          v-for="cast in anime.cast_detail.characterPreview.edges.slice(0, 5)"
         >
           <img :src="cast.node.image.large" class="cast-item-image" />
           <div class="cast-item-name">
@@ -102,6 +103,7 @@ const route = useRoute()
 const router = useRouter()
 const { id } = route.params
 const anime = ref({})
+const name = ref(null)
 
 onMounted(async () => {
   let animeData = await queryAnimeDetail(id)
@@ -122,6 +124,10 @@ onMounted(async () => {
   anime.value = finalAnimeData
   console.log(anime.value)
 })
+
+const onSeasonSelect = value => {
+  console.log(value)
+}
 
 const goBack = () => router.back()
 </script>
@@ -151,7 +157,7 @@ const goBack = () => router.back()
   width: fit-content;
   z-index: 999;
   align-items: center;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 }
 
 .anime-header-name {
@@ -244,11 +250,19 @@ const goBack = () => router.back()
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.875rem;
   font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .anime-detail-genres-item {
   display: flex;
   align-items: center;
+}
+
+.anime-detail-season {
+  color: #fff;
+  font-size: 1.225rem;
+  z-index: 999;
+  margin-bottom: 12px;
 }
 
 .divider-sm {
@@ -268,12 +282,12 @@ const goBack = () => router.back()
   align-items: center;
   margin-bottom: 1rem;
   width: 280px;
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
   border-radius: 6px;
 }
 
 .cast-item-image {
-  width: 60px;
+  width: 72px;
   height: 81px;
   object-fit: cover;
   margin-right: 1.1rem;
