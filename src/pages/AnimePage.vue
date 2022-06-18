@@ -28,7 +28,7 @@
           <div class="rate-box">
             <span class="hint-tag">TMDb</span> {{ anime.vote_average }}
           </div>
-          <div class="rate-box">
+          <div class="rate-box" v-if="anime.cast_detail">
             <img src="https://anilist.co/img/icons/icon.svg" class="al-tag" />
             {{ anime.cast_detail.averageScore }}
           </div>
@@ -64,8 +64,34 @@
           </div>
         </div>
         <div class="anime-detail-season">Seasons</div>
+        <n-scrollbar
+          style="max-height: 200px; -webkit-app-region: no-drag"
+          class="anime-detail-season-list"
+        >
+          <div class="season-item" v-for="item in anime.seasons_detail">
+            <div class="season-item-title">
+              <div class="item-title-text">
+                <n-ellipsis style="max-width: 260px" :tooltip="false">
+                  {{ item.name }}
+                </n-ellipsis>
+              </div>
+              <div class="item-title-episode">
+                {{ item.episodes.length }} Episodes
+              </div>
+            </div>
+            <div class="season-item-duration">
+              <div class="item-duration-container">
+                <div class="item-duration-text">Avg Duration</div>
+                <div class="item-duration-time">
+                  {{ anime.episode_run_time[0] }}
+                </div>
+              </div>
+              <app-icon name="right" />
+            </div>
+          </div>
+        </n-scrollbar>
       </div>
-      <div class="anime-detail-cast">
+      <div class="anime-detail-cast" v-if="anime.cast_detail">
         <div
           class="anime-detail-cast-item"
           v-for="cast in anime.cast_detail.characterPreview.edges.slice(0, 5)"
@@ -103,7 +129,6 @@ const route = useRoute()
 const router = useRouter()
 const { id } = route.params
 const anime = ref({})
-const name = ref(null)
 
 onMounted(async () => {
   let animeData = await queryAnimeDetail(id)
@@ -124,10 +149,6 @@ onMounted(async () => {
   anime.value = finalAnimeData
   console.log(anime.value)
 })
-
-const onSeasonSelect = value => {
-  console.log(value)
-}
 
 const goBack = () => router.back()
 </script>
@@ -263,6 +284,64 @@ const goBack = () => router.back()
   font-size: 1.225rem;
   z-index: 999;
   margin-bottom: 12px;
+}
+
+.anime-detail-season-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.season-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 1rem;
+}
+
+.season-item:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.season-item-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-title-text {
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.item-title-episode {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+}
+
+.season-item-duration {
+  display: flex;
+  align-items: center;
+}
+
+.item-duration-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.item-duration-text {
+  color: #fff;
+  font-size: 0.875rem;
+}
+
+.item-duration-time {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
 }
 
 .divider-sm {
